@@ -1,0 +1,29 @@
+{
+  "name": "blog-system",
+  "version": "1.0.0",
+  "description": "Blog system web-server based on Node.js + express framework",
+  "main": "index.js",
+  "scripts": {
+    "babel-node": "babel-node --presets=latest",
+    "start": "nodemon --exec npm run babel-node -- src/server.js"
+  },
+  "author": "ipin4",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "pug": "^2.0.0-rc.4",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "nodemon": "^1.14.11"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  }
+}
