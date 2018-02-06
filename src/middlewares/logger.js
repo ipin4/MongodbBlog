@@ -16,3 +16,7 @@ export const addToLogInfo = (req) => {
   });
 }
 
+export const addToErrorLogInfo = (err) => {
+  _logger.error({message: err});
+}
+

@@ -1,0 +1,16 @@
+html
+  head
+    title= 'Mongodb Blog'
+  body
+    h2= 'Welcome to BB!'
+    div= error
+    form(action='/register', method='POST')
+        p
+        div= 'Name'
+        input(type='text', name='name', value='')
+        div= 'Login'
+        input(type='text', name='username', value='')
+        div= 'Password'
+        input(type='text', name='password', value='')
+        input(type='submit', value='Submit')
+    

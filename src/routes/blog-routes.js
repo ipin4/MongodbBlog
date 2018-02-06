@@ -1,82 +1,68 @@
-import {ObjectID} from 'mongodb';
+import Article from '../schema/Article';
+import {userLoggedIn} from '../middlewares/passport';
 
 export const blogRoutes = (app, db) => {
   const collection = db.collection('blogs');
   // create
-  app.post('/blogs', (req, res) => {
-    const blog = {
+  app.post('/blogs', userLoggedIn, (req, res,  next) => {
+    const newArticle = Article({
       title: req.body.title,
-      text: req.body.body
-    };
+      body: req.body.body,
+      owner: 'someOwner',
+      created_at: new Date(),
+    });
 
-    collection.insert(blog, (error, result) => {
-      if (error) {
-        res.send({error});
-      } else {
-        res.send(result.ops[0]);
-      }
-    })
+    newArticle.save()
+      .then((err) => res.send('Article created'))
+      .catch(next);
   });
 
   // read
-  app.get('/blogs', (req, res) => {
-    collection.find({}).toArray((error, list) => {
-      if (error) {
-        res.send({'error':'DB Error has occured'});
-      } else {
-        if (list.length) {
-          res.send(list);
-        } else {
-          res.send(`Can't find any blogs`);
-        }
-      }
-    })
+  app.get('/blogs', userLoggedIn,  (req, res, next) => {
+    Article.find()
+      .then((articlesList) => {
+        articlesList.length ? res.send(articlesList) :
+          res.send(`Can't find any articles`);
+      })
+      .catch(next)
   });
 
-  app.get('/blogs/:id', (req, res) => {
-    const details = {'_id': ObjectID(req.params.id)};
-
-    collection.findOne(details, (error, item) => {
-      if (error) {
-        res.send({error});
-      } else {
-        if (item) {
-          res.send(item);
-        } else {
-          res.send(`Blog with id:${req.params.id} not found`);
-        }
-      }
-    })
+  app.get('/blogs/:id', userLoggedIn, (req, res, next) => {
+    Article.findById(req.params.id)
+      .then((item) => {
+        item ? res.send(item) :
+          res.send(`Article ${req.params.id} not found`);
+      })
+      .catch(next);
   });
 
   // update
-  app.put('/blogs/:id', (req, res) => {
-    const details = {'_id': ObjectID(req.params.id)};
-    const blog = {
+  app.put('/blogs/:id', userLoggedIn, (req, res, next) => {
+    const updatedArticle = {
       title: req.body.title,
-      text: req.body.body
+      body: req.body.body,
+      owner: 'someOwner',
+      updated_at: new Date(),
     };
 
-    collection.update(details, blog, (error, result) => {
-      if (error) {
-        res.send({error});
-      } else {
-        res.send(blog);
-      }
-    })
+    Article.findByIdAndUpdate(req.params.id, updatedArticle)
+      .then((result) =>
+        res.send(`Article ${req.params.id} was updated`))
+      .catch(next)
   });
 
   // delete
-  app.delete('/blogs/:id', (req, res) => {
-    const id = req.params.id;
-    const details = {'_id': ObjectID(id)};
-
-    collection.remove(details, (error, item) => {
-      if (error) {
-        res.send({error});
-      } else {
-        res.send('Blog item ' + id + ' deleted!');
-      }
-    })
+  app.delete('/blogs/:id', userLoggedIn, (req, res, next) => {
+    Article.findByIdAndRemove(req.params.id)
+      .then((error, item) =>
+        res.send('Article ' + req.params.id + ' deleted!'))
+      .catch(next)
   });
+
+  //redirect
+  app.get('/', (req, res, next) => {
+    userLoggedIn ?
+      res.redirect('/blogs') :
+      res.redirect('/login')
+  })
 };
