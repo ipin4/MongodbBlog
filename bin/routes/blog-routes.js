@@ -21,7 +21,7 @@ export const blogRoutes = (app, db) => {
   app.get('/blogs', userLoggedIn,  (req, res, next) => {
     Article.find()
       .then((articlesList) => {
-        articlesList.length ? res.send(articlesList) :
+        articlesList.length ? res.render('blogs', {articlesList}) :
           res.send(`Can't find any articles`);
       })
       .catch(next)
