@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  text-transform: uppercase;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+a {
+  color: black;
+}
+
+.common {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  width: 100%;
+}
+
+input, textarea, button {
+  font-size: 18px;
+  line-height: 18px;
+  border: 1px solid #96938f;
+  border-radius: 5px;
+  background-image: none;
+  box-shadow: none;
+  padding: 10px;
+  background-color: rgba(255,255,255,.2);
+}
+
+input, textarea {
+  width: 100%;
+}
+
+button {
+  margin: 30px 0 0;
+  background-color: #3a3a35;
+  color: #e1e0ef;
+  text-transform: uppercase;
+}

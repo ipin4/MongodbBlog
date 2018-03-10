@@ -1,0 +1,10 @@
+.searchContainer {
+  text-align: right;
+}
+
+.inverseButton {
+  margin: 30px 10px 0;
+  background-color: #e1e0ef;
+  color: #3a3a35;
+  text-transform: uppercase;
+}
