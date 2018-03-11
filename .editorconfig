@@ -10,14 +10,14 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{html,css,scss,sass,mustache}]
+[*.jsx]
 charset = utf-8
 indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.py]
+[*.{html,css}]
 charset = utf-8
 indent_size = 2
 indent_style = space
